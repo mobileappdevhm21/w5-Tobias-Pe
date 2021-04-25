@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.apod_view_holder.view.*
 
 class ApodAdapter(var images: List<ApodImage>) :
@@ -18,7 +19,11 @@ class ApodAdapter(var images: List<ApodImage>) :
             /* load image */
             Glide.with(itemView.context)
                 .load(image.hdurl)
+                .apply(RequestOptions()
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image))
                 .into(itemView.imageView)
+
             itemView.imageView.contentDescription = image.title
             /* set title & date */
             itemView.title_textView.text = image.title
